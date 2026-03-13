@@ -53,7 +53,7 @@ namespace UnitGrad {
     
                 UnitTensor<U>* out_ptr = out.get();
                 out->_backward = [l, r, out_ptr] {
-                    l->grad -= out_ptr->grad;
+                    l->grad += out_ptr->grad;
                     r->grad -= out_ptr->grad;
                 };
                 return out;
@@ -80,7 +80,7 @@ namespace UnitGrad {
     
                 UnitTensor<U>* out_ptr = out.get();
                 out->_backward = [u, out_ptr] {
-                    u->grad += out_ptr->data > 0 ? out_ptr->grad : 0;
+                    u->grad += u->data > 0 ? out_ptr->grad : 0;
                 };
                 return out;
             }
