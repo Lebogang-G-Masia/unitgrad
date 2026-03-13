@@ -7,6 +7,7 @@
 #include <cmath>
 #include <ostream>
 #include <algorithm>
+#include <unordered_set>
 
 #ifndef UNIT_GRAD_H
 #define UNIT_GRAD_H
@@ -91,12 +92,12 @@ namespace UnitGrad {
 
             friend void backward(const Ptr& root) {
                 std::vector<Ptr> topo {};
-                std::vector<Ptr> visted {};
+                std::unordered_set<Ptr> visited {};
 
                 std::function<void(const Ptr&)> build_topo = [&](const Ptr& p) {
                     if (p == nullptr) return;
-                    if (std::find(visted.begin(), visted.end(), p) == visted.end()) {
-                        visted.push_back(p);
+                    if (visited.find(p) == visited.end()) {
+                        visited.insert(p);
                         for (const Ptr& child: p->prev) build_topo(child);
                         topo.push_back(p);
                     }
