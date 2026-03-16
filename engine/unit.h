@@ -45,7 +45,7 @@ namespace UnitGrad {
             }
 
             friend Ptr operator-(const Ptr& l, const Ptr& r) {
-                Ptr out = UnitTensor<U>::make(l->data - r->rdata);
+                Ptr out = UnitTensor<U>::make(l->data - r->data);
                 out->prev = {l, r};
                 out->op = "-";
                 
