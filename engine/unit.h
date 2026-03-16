@@ -54,6 +54,7 @@ namespace UnitGrad {
                     l->grad += out_ptr->grad;
                     r->grad -= out_ptr->grad;
                 };
+                return out;
             }
 
             friend Ptr operator*(const Ptr& l, const Ptr& r) {
