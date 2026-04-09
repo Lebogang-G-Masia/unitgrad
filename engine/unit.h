@@ -1,6 +1,4 @@
-#include "include/matrix.hpp"
 #include <memory>
-#include <variant>
 #include <vector>
 #include <string>
 #include <functional>
@@ -48,13 +46,7 @@ namespace UnitGrad {
                 Ptr out = UnitTensor<U>::make(l->data - r->data);
                 out->prev = {l, r};
                 out->op = "-";
-                
-                UnitTensor<U>* out_ptr = out.get();
-                out->_backward = [l, r, out_ptr] {
-                    l->grad += out_ptr->grad;
-                    r->grad -= out_ptr->grad;
-                };
-                return out;
+                UnitTensor<U>* out_ptr = out.get(); out->_backward = [l, r, out_ptr] { l->grad += out_ptr->grad; r->grad -= out_ptr->grad; }; return out;
             }
 
             friend Ptr operator*(const Ptr& l, const Ptr& r) {
